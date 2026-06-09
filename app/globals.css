@@ -1,0 +1,210 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-sans);
+  --font-mono: var(--font-geist-mono);
+  --font-heading: var(--font-sans);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
+}
+
+:root {
+  /* UzAuto · Akademiya brand ranglar */
+  --ua-navy:  #0B3D91;
+  --ua-gold:  #FFB81C;
+  --ua-navy-dark: #082d6e;
+  --ua-navy-light: #1a52b3;
+
+  --background: oklch(0.975 0.003 240);
+  --foreground: oklch(0.15 0.015 240);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.15 0.015 240);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.15 0.015 240);
+  /* primary = UzAuto navy #0B3D91 */
+  --primary: oklch(0.35 0.165 262);
+  --primary-foreground: oklch(1 0 0);
+  /* secondary = light gray */
+  --secondary: oklch(0.94 0.005 240);
+  --secondary-foreground: oklch(0.35 0.165 262);
+  --muted: oklch(0.94 0.005 240);
+  --muted-foreground: oklch(0.52 0.02 240);
+  --accent: oklch(0.94 0.005 240);
+  --accent-foreground: oklch(0.15 0.015 240);
+  --destructive: oklch(0.577 0.245 27.325);
+  --border: oklch(0.90 0.006 240);
+  --input: oklch(0.90 0.006 240);
+  --ring: oklch(0.35 0.165 262);
+  /* gold = #FFB81C */
+  --gold: oklch(0.82 0.18 85);
+  --chart-1: oklch(0.35 0.165 262);
+  --chart-2: oklch(0.55 0.15 200);
+  --chart-3: oklch(0.65 0.18 145);
+  --chart-4: oklch(0.82 0.18 85);
+  --chart-5: oklch(0.65 0.22 30);
+  --radius: 0.5rem;
+  --sidebar: oklch(1 0 0);
+  --sidebar-foreground: oklch(0.15 0.015 240);
+  --sidebar-primary: oklch(0.35 0.165 262);
+  --sidebar-primary-foreground: oklch(1 0 0);
+  --sidebar-accent: oklch(0.94 0.005 240);
+  --sidebar-accent-foreground: oklch(0.15 0.015 240);
+  --sidebar-border: oklch(0.90 0.006 240);
+  --sidebar-ring: oklch(0.35 0.165 262);
+}
+
+.dark {
+  --background: oklch(0.145 0 0);
+  --foreground: oklch(0.985 0 0);
+  --card: oklch(0.205 0 0);
+  --card-foreground: oklch(0.985 0 0);
+  --popover: oklch(0.205 0 0);
+  --popover-foreground: oklch(0.985 0 0);
+  --primary: oklch(0.922 0 0);
+  --primary-foreground: oklch(0.205 0 0);
+  --secondary: oklch(0.269 0 0);
+  --secondary-foreground: oklch(0.985 0 0);
+  --muted: oklch(0.269 0 0);
+  --muted-foreground: oklch(0.708 0 0);
+  --accent: oklch(0.269 0 0);
+  --accent-foreground: oklch(0.985 0 0);
+  --destructive: oklch(0.704 0.191 22.216);
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: oklch(0.556 0 0);
+  --chart-1: oklch(0.87 0 0);
+  --chart-2: oklch(0.556 0 0);
+  --chart-3: oklch(0.439 0 0);
+  --chart-4: oklch(0.371 0 0);
+  --chart-5: oklch(0.269 0 0);
+  --sidebar: oklch(0.205 0 0);
+  --sidebar-foreground: oklch(0.985 0 0);
+  --sidebar-primary: oklch(0.488 0.243 264.376);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.269 0 0);
+  --sidebar-accent-foreground: oklch(0.985 0 0);
+  --sidebar-border: oklch(1 0 0 / 10%);
+  --sidebar-ring: oklch(0.556 0 0);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  html {
+    @apply font-sans;
+    scroll-behavior: smooth;
+  }
+}
+
+/* ── Page transition ── */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+main > div {
+  animation: fadeIn 0.18s ease-out;
+}
+
+/* ── Card base ── */
+.card-base {
+  background: #ffffff;
+  border-radius: 1rem;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 1px 8px rgba(0,0,0,0.06);
+}
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar       { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.15); border-radius: 9999px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(0,0,0,0.25); }
+
+/* ── Custom line clamp ── */
+.line-clamp-2 {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+/* ── Table hover row ── */
+tr.row-hover:hover td { background: #f8fafc !important; }
+
+/* ── Auth page background ── */
+.auth-bg {
+  background:
+    radial-gradient(ellipse at 20% 50%, rgba(11,61,145,0.12) 0%, transparent 60%),
+    radial-gradient(ellipse at 80% 20%, rgba(255,184,28,0.08) 0%, transparent 50%),
+    #f0f4f8;
+}
+
+/* ── Sidebar nav links ── */
+.sidebar-nav-link:not(.active):hover {
+  background-color: rgba(255,255,255,0.07) !important;
+  color: #ffffff !important;
+}
+.sidebar-nav-link:not(.active):hover svg {
+  color: rgba(255,255,255,0.75) !important;
+}
+
+/* ── Navbar icon buttons ── */
+.navbar-icon-btn {
+  background-color: rgba(255,255,255,0.1);
+  color: #ffffff;
+}
+.navbar-icon-btn:hover {
+  background-color: rgba(255,255,255,0.18);
+}
+.navbar-user-btn {
+  background-color: rgba(255,255,255,0.1);
+}
+.navbar-user-btn:hover {
+  background-color: rgba(255,255,255,0.18);
+}
