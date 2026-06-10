@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server'
 import { getSession } from '@/lib/auth'
+import { put } from '@vercel/blob'
 import { writeFile, mkdir } from 'fs/promises'
 import { join } from 'path'
 import { ADMIN_ROLES } from '@/constants/roles'
@@ -38,28 +39,37 @@ export async function POST(request: Request) {
 
     const mimeAllowed = ALLOWED_TYPES[file.type]
     if (!mimeAllowed) {
-      return NextResponse.json({ error: `Bu fayl turi qo'llab-quvvatlanmaydi: ${file.type}` }, { status: 400 })
+      return NextResponse.json({
+        error: `Bu fayl turi qo'llab-quvvatlanmaydi: ${file.type}`,
+      }, { status: 400 })
     }
 
-    const ext = file.name.split('.').pop()?.toLowerCase() ?? 'bin'
     const safeName = file.name
-      .replace(/[^a-zA-Z0-9._\-Ѐ-ӿ ]/g, '_')
+      .replace(/[^a-zA-Z0-9._\- ]/g, '_')
       .replace(/\s+/g, '_')
       .slice(0, 100)
     const timestamp = Date.now()
-    const filename = `${timestamp}_${safeName}`
+    const filename = `uploads/${timestamp}_${safeName}`
 
+    // Vercel production: use Blob storage
+    if (process.env.BLOB_READ_WRITE_TOKEN) {
+      const blob = await put(filename, file, {
+        access: 'public',
+        contentType: file.type,
+      })
+      return NextResponse.json({ url: blob.url, filename: safeName, size: file.size })
+    }
+
+    // Local dev: save to public/uploads
     const uploadDir = join(process.cwd(), 'public', 'uploads')
     await mkdir(uploadDir, { recursive: true })
-
     const buffer = Buffer.from(await file.arrayBuffer())
-    const filepath = join(uploadDir, filename)
-    await writeFile(filepath, buffer)
-
-    const url = `/uploads/${filename}`
-    return NextResponse.json({ url, filename, size: file.size, ext })
-  } catch (e) {
+    await writeFile(join(uploadDir, `${timestamp}_${safeName}`), buffer)
+    const url = `/uploads/${timestamp}_${safeName}`
+    return NextResponse.json({ url, filename: safeName, size: file.size })
+  } catch (e: unknown) {
     console.error('Upload error:', e)
-    return NextResponse.json({ error: 'Fayl saqlashda xatolik' }, { status: 500 })
+    const msg = e instanceof Error ? e.message : 'Fayl saqlashda xatolik'
+    return NextResponse.json({ error: msg }, { status: 500 })
   }
 }
