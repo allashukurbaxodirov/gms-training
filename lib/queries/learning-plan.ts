@@ -13,14 +13,18 @@ export async function getLearningPlan(userId: string) {
       c.is_mandatory,
       c.passing_score,
       c.thumbnail_url,
+      c.scheduled_month,
       e.id          AS enrollment_id,
       e.status      AS enrollment_status,
+      e.training_status,
+      e.planned_date::text,
+      e.delivered_date::text,
       COALESCE(e.progress_percent, 0) AS progress_percent
     FROM courses c
     LEFT JOIN enrollments e
       ON e.course_id = c.id AND e.user_id = ${userId}::uuid
     WHERE c.is_published = true
-    ORDER BY c.is_mandatory DESC, c.category NULLS LAST, c.title ASC
+    ORDER BY c.scheduled_month NULLS LAST, c.category, c.title ASC
   `
   return rows
 }
