@@ -4,7 +4,7 @@ import { useState, useMemo } from 'react'
 import { useRouter } from 'next/navigation'
 import { toast } from 'sonner'
 import {
-  Search, BookOpen, Clock, BarChart2, CheckCircle22,
+  Search, BookOpen, Clock, BarChart2, CheckCircle2,
   Play, Plus, AlertTriangle, Filter, ChevronRight,
 } from 'lucide-react'
 
