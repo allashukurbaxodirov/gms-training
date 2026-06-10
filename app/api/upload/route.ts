@@ -51,13 +51,21 @@ export async function POST(request: Request) {
     const timestamp = Date.now()
     const filename = `uploads/${timestamp}_${safeName}`
 
-    // Vercel production: use Blob storage
+    // Vercel Blob storage (production)
     if (process.env.BLOB_READ_WRITE_TOKEN) {
       const blob = await put(filename, file, {
         access: 'public',
         contentType: file.type,
       })
       return NextResponse.json({ url: blob.url, filename: safeName, size: file.size })
+    }
+
+    // Local dev only — Vercel filesystem is read-only
+    if (process.env.NODE_ENV === 'production') {
+      return NextResponse.json(
+        { error: 'BLOB_READ_WRITE_TOKEN sozlanmagan. Vercel → Storage → Blob ulanganligini tekshiring.' },
+        { status: 503 }
+      )
     }
 
     // Local dev: save to public/uploads
