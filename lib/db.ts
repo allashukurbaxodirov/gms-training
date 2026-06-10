@@ -6,11 +6,29 @@ declare global {
 }
 
 function createSql() {
-  return postgres(process.env.DATABASE_URL!, {
-    ssl: process.env.DATABASE_SSL === 'true' ? 'require' : false,
-    max: 20,
-    idle_timeout: 30,
-    connect_timeout: 10,
+  const rawUrl = process.env.DATABASE_URL!
+
+  // SSL: explicitly set via env OR auto-detect from connection string
+  const useSSL =
+    process.env.DATABASE_SSL === 'true' ||
+    rawUrl?.includes('sslmode=require') ||
+    rawUrl?.includes('neon.tech')
+
+  // postgres npm does not support channel_binding — strip it from URL
+  const cleanUrl = rawUrl
+    ?.replace(/[?&]channel_binding=[^&]*/g, '')
+    .replace(/\?&/, '?')
+    .replace(/&&/g, '&')
+    .replace(/[?&]$/, '')
+
+  // Serverless-friendly: small pool, short timeouts
+  const isServerless = process.env.NODE_ENV === 'production'
+
+  return postgres(cleanUrl, {
+    ssl: useSSL ? 'require' : false,
+    max: isServerless ? 5 : 20,
+    idle_timeout: 20,
+    connect_timeout: 15,
   })
 }
 
